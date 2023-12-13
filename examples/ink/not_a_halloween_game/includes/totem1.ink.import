@@ -1,0 +1,14 @@
+[remap]
+
+importer="inkgd.ink"
+type="Resource"
+uid="uid://bniqaoa1wn8nv"
+path="res://.godot/imported/totem1.ink-ac922e7bc02efd5052560ee3e8d24539.res"
+
+[deps]
+
+source_file="res://examples/ink/not_a_halloween_game/includes/totem1.ink"
+dest_files=["res://.godot/imported/totem1.ink-ac922e7bc02efd5052560ee3e8d24539.res"]
+
+[params]
+

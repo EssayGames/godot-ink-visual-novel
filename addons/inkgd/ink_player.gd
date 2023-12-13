@@ -1,6 +1,6 @@
 # ############################################################################ #
 # Copyright © 2018-2022 Paul Joannon
-# Copyright © 2019-2022 Frédéric Maquin <fred@ephread.com>
+# Copyright © 2019-2023 Frédéric Maquin <fred@ephread.com>
 # Licensed under the MIT License.
 # See LICENSE in the project root for license information.
 # ############################################################################ #
@@ -13,10 +13,8 @@ class_name InkPlayer
 # Imports
 # ############################################################################ #
 
-var InkRuntime = load("res://addons/inkgd/runtime.gd")
+var InkRuntimeManager = load("res://addons/inkgd/ink_runtime_manager.gd")
 var InkResource = load("res://addons/inkgd/editor/import_plugins/ink_resource.gd")
-var InkStory = load("res://addons/inkgd/runtime/story.gd")
-var InkFunctionResult = load("res://addons/inkgd/runtime/extra/function_result.gd")
 
 
 # ############################################################################ #
@@ -113,14 +111,14 @@ func set_dnsdv(value: bool):
 		_push_null_runtime_error()
 		return false
 
-	ink_runtime.dont_save_default_values = value
+	InkVariablesState.dont_save_default_values = value
 func get_dnsdv() -> bool:
 	var ink_runtime = _ink_runtime.get_ref()
 	if ink_runtime == null:
 		_push_null_runtime_error()
 		return false
 
-	return ink_runtime.dont_save_default_values
+	return InkVariablesState.dont_save_default_values
 
 ## Uses `assert` instead of `push_error` to report critical errors, thus
 ## making them more explicit during development.
@@ -829,7 +827,7 @@ func _add_runtime() -> void:
 		runtime = get_tree().root.get_node("__InkRuntime")
 	else:
 		_manages_runtime = true
-		runtime = InkRuntime.init(get_tree().root)
+		runtime = InkRuntimeManager.init(get_tree().root)
 
 	if !runtime.is_connected("exception_raised", _exception_raised):
 		runtime.connect("exception_raised", _exception_raised)
@@ -839,7 +837,7 @@ func _add_runtime() -> void:
 
 func _remove_runtime() -> void:
 	if _manages_runtime:
-		InkRuntime.deinit(get_tree().root)
+		InkRuntimeManager.deinit(get_tree().root)
 
 
 func _current_platform_supports_threads() -> bool:

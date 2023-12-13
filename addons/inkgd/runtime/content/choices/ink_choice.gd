@@ -1,7 +1,7 @@
 # warning-ignore-all:unused_class_variable
 # ############################################################################ #
 # Copyright © 2015-2021 inkle Ltd.
-# Copyright © 2019-2022 Frédéric Maquin <fred@ephread.com>
+# Copyright © 2019-2023 Frédéric Maquin <fred@ephread.com>
 # All Rights Reserved
 #
 # This file is part of inkgd.
@@ -49,6 +49,16 @@ var tags = null # Array<String>?
 # ############################################################################ #
 # GDScript extra methods
 # ############################################################################ #
+
+# (Dictionary<InkItem, int>, Array<String>, Array<InkListDefinition>)
+func _init_from_csharp(text: String, source_path: Variant, index: int, target_path: InkPath, is_invisible_default: bool, tags: Variant):
+	# TODO: Document limitations regarding threads.
+	self.text = text
+	self.source_path = source_path
+	self.index = index
+	self.target_path = target_path
+	self.is_invisible_default = is_invisible_default
+	self.tags = tags
 
 func is_ink_class(type):
 	return type == "Choice" || super.is_ink_class(type)

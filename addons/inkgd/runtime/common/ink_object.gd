@@ -2,7 +2,7 @@
 # warning-ignore-all:unused_class_variable
 # ############################################################################ #
 # Copyright © 2015-2021 inkle Ltd.
-# Copyright © 2019-2022 Frédéric Maquin <fred@ephread.com>
+# Copyright © 2019-2023 Frédéric Maquin <fred@ephread.com>
 # All Rights Reserved
 #
 # This file is part of inkgd.
@@ -73,7 +73,7 @@ var path: InkPath:
 			if self.parent == null:
 				_path = InkPath.new()
 			else:
-				var comps: Array = [] # Stack<Path3D.Component>
+				var comps: Array = [] # Stack<Path.Component>
 
 				var child = self
 				var container = InkUtils.as_or_null(child.parent, "InkContainer")

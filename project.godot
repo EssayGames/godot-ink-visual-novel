@@ -16,11 +16,15 @@ config/icon="res://icon.png"
 
 [autoload]
 
-__InkRuntime="*res://addons/inkgd/runtime/static/ink_runtime.gd"
+__InkRuntime="*res://addons/inkgd/ink_runtime.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/inkgd/plugin.cfg")
+
+[inkgd]
+
+register_templates=true
 
 [physics]
 
