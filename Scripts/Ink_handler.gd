@@ -91,3 +91,26 @@ func _variable_changed(variable_name, new_value):
 	elif variable_name == "f_happy" and new_value == false:
 		$Female.texture = f_neutral_icon
 	print("Variable '%s' changed to: %s" %[variable_name, new_value])
+
+
+func _on_save_pressed():
+#	print(_ink_player.get_state())
+	_ink_player.save_state_to_path("res://saves/save.save")
+	
+	var file = FileAccess.open("res://saves/story_text.save",FileAccess.WRITE)
+	file.store_string($ColorRect/Dialog.text)
+	file.close()
+	pass # Replace with function body.
+
+
+func _on_load_pressed():
+	if FileAccess.file_exists("res://saves/save.save"):
+		_ink_player.load_state_from_path("res://saves/save.save")
+		for child in $ColorRect/Choice_Container.get_children():
+			child.queue_free()
+		_btn = []
+		var file = FileAccess.open("res://saves/story_text.save", FileAccess.READ)
+		$ColorRect/Dialog.text = file.get_as_text()
+		_continue_story()
+	pass # Replace with function body.
+
