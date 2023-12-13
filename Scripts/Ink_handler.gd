@@ -12,7 +12,7 @@ var _ink_player = InkPlayer.new()
 
 func _ready():
 	add_child(_ink_player)
-	_ink_player.ink_file = load("res://INK/Tutorial_example.ink.json")
+	_ink_player.ink_file = load("res://INK/Tutorial_example.json")
 	
 	_ink_player.loads_in_background = true
 	_ink_player.connect("loaded", Callable(self, "_story_loaded"))
@@ -34,6 +34,7 @@ func _continue_story():
 		
 		var dialog_text = get_node("ColorRect/Dialog")
 		dialog_text.text = text
+		dialog_text.text = dialog_text.text.replace("`",  "\n")
 		
 	if _ink_player.has_choices:
 		# 'current_choices' contains a list of the choices, as references.
@@ -85,8 +86,8 @@ func _observe_variables():
 	_ink_player.observe_variables(["f_happy", "f_nervous", "f_neutral"], self, "_variable_changed")
 
 func _variable_changed(variable_name, new_value):
-	if variable_name == "f_happy" and new_value == 1:
+	if variable_name == "f_happy" and new_value == true:
 		$Female.texture = f_happy_icon
-	elif variable_name == "f_happy" and new_value == 0:
+	elif variable_name == "f_happy" and new_value == false:
 		$Female.texture = f_neutral_icon
 	print("Variable '%s' changed to: %s" %[variable_name, new_value])

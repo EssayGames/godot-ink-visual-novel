@@ -46,9 +46,43 @@ M: ... a class I needed to graduate got canceled suddenly
 ~m_neutral = true
 ~m_happy = false
 M: So an eventful day. 
-*[M: I should go...]->gotta_go
+*[M: I hear you...]->hear_you
+
+===hear_you===
+M: I hope this semester is...
+*[...better than last.]->better
+*[...is just as fun as the Fall!]->fun_fall
+
+===better===
+M: I fell behind early in homework and I can't let that happen again.
+*[F: Why not?]->why_not
+*[F: You won't]->you_wont
+
+===why_not===
+M: Because my scholarship depends on keeping my grades up.
+*[F: You'll be fine]->gotta_go
+
+===you_wont===
+M: Thanks F. That made my day.
+*[F: Anytime!]->gotta_go
+
+===fun_fall===
+F: Well, as fun as it was, don't let it distract you!
+*[M: Distract me?!]->distract
+*[M: I won't]->I_wont
+
+===distract===
+M: It's not distracting to have fun, it's part of being in school!
+*[F: Ok... whatever you say...]->gotta_go
+
+===I_wont===
+M: I'm going to keep my head down and really focus this semester.
+*[F: You've got this, M!]->gotta_go
 
 ===gotta_go===
 ~f_happy = true
 ~f_neutral = false
-F: Cool, see you around!->END
+F: For now, though, I gotta get to my next class!`M: Cool, see you around!->END
+
+
+
