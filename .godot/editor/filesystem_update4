@@ -5,3 +5,4 @@ res://Scenes/3D_Demo.tscn
 res://examples/scenes/main.tscn
 res://examples/scenes/the_intercept.tscn
 res://addons/inkgd/ink_player.gd
+res://Scripts/notes.gd
