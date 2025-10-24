@@ -1,4 +1,8 @@
+AnimationPlayer
+Label
+ColorRect
+Panel
+Button
+VBoxContainer
 Control
 Node
-Label
-Button

@@ -11,10 +11,12 @@ cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
 
 [node name="Dialog_Button" type="Button"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
+theme_override_colors/font_hover_color = Color(0.164333, 0, 0.58, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = SubResource("1")
 text = "Choice"

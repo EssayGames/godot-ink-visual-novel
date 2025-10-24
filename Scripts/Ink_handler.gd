@@ -6,13 +6,18 @@ var InkPlayer = load("res://addons/inkgd/ink_player.gd")
 @onready var choice_btn = load("res://Scenes/Dialog_Button.tscn")
 @onready var f_happy_icon = load("res://Sprites/female_01_smile.png")
 @onready var f_neutral_icon = load("res://Sprites/female_01_neutral.png")
+@onready var f_nervous_icon = load("res://Sprites/female_01_nervous.png")
+@onready var m_happy_icon = load("res://Sprites/male_01_smile.png")
+@onready var m_neutral_icon = load("res://Sprites/male_01_neutral.png")
+@onready var m_anger_icon = load("res://Sprites/male_01_anger.png")
 
 var _ink_player = InkPlayer.new()
 @onready var _btn = []
+var current_tags = []
 
 func _ready():
 	add_child(_ink_player)
-	_ink_player.ink_file = load("res://INK/Tutorial_example.json")
+	_ink_player.ink_file = load("res://INK/Tutorial_example_update.json")
 	
 	_ink_player.loads_in_background = true
 	_ink_player.connect("loaded", Callable(self, "_story_loaded"))
@@ -30,10 +35,12 @@ func _story_loaded(successfully: bool):
 
 func _continue_story():
 	while _ink_player.can_continue:
+		
 		var text = _ink_player.continue_story()
+		current_tags = _ink_player.get_current_tags()
 		
 		var dialog_text = get_node("ColorRect/Dialog")
-		dialog_text.text = text
+		dialog_text.text = _check_tags(text)
 		dialog_text.text = dialog_text.text.replace("`",  "\n")
 		
 	if _ink_player.has_choices:
@@ -73,6 +80,15 @@ func _close_btn():
 	$Female.visible = false
 	$ColorRect/Close.visible = false
 
+func _check_tags(text):
+	if current_tags == []:
+		pass
+	elif current_tags == ["jimmy"]:
+		text = "Jimmy: " + text
+	elif current_tags == ["jenny"]:
+		text = "Jenny:" + text
+	
+	return text
 
 # Uncomment to bind an external function.
 #
@@ -83,13 +99,33 @@ func _close_btn():
 # 	pass
 
 func _observe_variables():
-	_ink_player.observe_variables(["f_happy", "f_nervous", "f_neutral"], self, "_variable_changed")
+	_ink_player.observe_variables(["f_happy", "f_nervous", "f_neutral", "m_anger", "m_neutral", "m_happy", "status_update", "quest_1"], self, "_variable_changed")
 
 func _variable_changed(variable_name, new_value):
 	if variable_name == "f_happy" and new_value == true:
 		$Female.texture = f_happy_icon
 	elif variable_name == "f_happy" and new_value == false:
 		$Female.texture = f_neutral_icon
+	if variable_name == "f_nervous" and new_value == true:
+		$Female.texture = f_nervous_icon
+	elif variable_name == "f_nervous" and new_value == false:
+		$Female.texture = f_neutral_icon
+	if variable_name == "m_happy" and new_value == true:
+		$Male.texture = m_happy_icon
+	elif variable_name == "m_happy" and new_value == false:
+		$Male.texture = m_neutral_icon
+	if variable_name == "m_anger" and new_value == true:
+		$Male.texture = m_anger_icon
+	elif variable_name == "m_anger" and new_value == false:
+		$Male.texture = m_neutral_icon
+	
+	if variable_name == "status_update" and new_value > 1:
+		$Quest/Label.text = "You Made \n Jimmy Happy!"
+		$Quest/AnimationPlayer.play("drop")
+	
+	if variable_name == "quest_1" and new_value == true:
+		$Quest/Label.text = "Quest: \n Complete Homework."
+		$Quest/AnimationPlayer.play("drop")
 	print("Variable '%s' changed to: %s" %[variable_name, new_value])
 
 func _on_save_pressed():

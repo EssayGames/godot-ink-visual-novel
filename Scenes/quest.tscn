@@ -1,0 +1,87 @@
+[gd_scene load_steps=5 format=3 uid="uid://2bahd7sx7bge"]
+
+[sub_resource type="Animation" id="Animation_rfus4"]
+resource_name = "drop"
+length = 4.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 3, 3.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(451, -129), Vector2(450, 15), Vector2(450, 15), Vector2(451, -129)]
+}
+
+[sub_resource type="Animation" id="Animation_nt16b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(451, -129)]
+}
+
+[sub_resource type="Animation" id="Animation_7b37a"]
+resource_name = "idle"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(451, -129), Vector2(451, -129)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7b37a"]
+_data = {
+&"RESET": SubResource("Animation_nt16b"),
+&"drop": SubResource("Animation_rfus4"),
+&"idle": SubResource("Animation_7b37a")
+}
+
+[node name="Quest" type="ColorRect"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -125.0
+offset_top = -129.0
+offset_right = 125.0
+offset_bottom = -29.0
+grow_horizontal = 2
+pivot_offset = Vector2(125, 0)
+mouse_filter = 2
+color = Color(0.95, 0.7828, 0.114, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Quest"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7b37a")
+}
+autoplay = "idle"

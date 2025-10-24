@@ -7,6 +7,11 @@ extends Node
 var InkPlayer = load("res://addons/inkgd/ink_player.gd")
 @export var _loaded_story : Resource
 
+var choice_button = load("res://Scenes/choice_button.tscn")
+var story_vars = [
+	"had_lunch",
+]
+
 # ############################################################################ #
 # Public Nodes
 # ############################################################################ #
@@ -44,7 +49,7 @@ func _story_loaded(successfully: bool):
 	if !successfully:
 		return
 
-	# _observe_variables()
+	_observe_variables()
 	# _bind_externals()
 
 	_continue_story()
@@ -61,7 +66,7 @@ func _continue_story():
 		# Set the text of a Label to this value to display it in your game.
 		print(text)
 		
-		$Label.text = text
+		$Text.text = text
 		
 	if _ink_player.has_choices:
 		# 'current_choices' contains a list of the choices, as strings.
@@ -69,9 +74,15 @@ func _continue_story():
 			
 			print(choice.text)
 			print(choice.tags)
+			
+			var btn = choice_button.instantiate()
+			btn.text = choice.text
+			$VBoxContainer.add_child(btn)
+			
+			btn.pressed.connect(_select_choice.bind(choice.index))
 			# '_select_choice' is a function that will take the index of
 			# your selection and continue the story.
-			_select_choice(0)
+			#_select_choice(0)
 	else:
 		# This code runs when the story reaches it's end.
 		print("The End")
@@ -79,6 +90,8 @@ func _continue_story():
 
 func _select_choice(index):
 	_ink_player.choose_choice_index(index)
+	for choice in $VBoxContainer.get_children():
+		choice.queue_free()
 	_continue_story()
 
 
@@ -94,9 +107,11 @@ func _select_choice(index):
 
 # Uncomment to observe the variables from your ink story.
 # You can observe multiple variables by putting adding them in the array.
-# func _observe_variables():
-# 	_ink_player.observe_variables(["var1", "var2"], self, "_variable_changed")
+func _observe_variables():
+	_ink_player.observe_variables(story_vars, self, "_variable_changed")
 #
 #
-# func _variable_changed(variable_name, new_value):
-# 	print("Variable '%s' changed to: %s" %[variable_name, new_value])
+func _variable_changed(variable_name, new_value):
+	if story_vars.has(variable_name) and new_value == true:
+		$Hungry_Text.visible = new_value
+	print("Variable '%s' changed to: %s" %[variable_name, new_value])

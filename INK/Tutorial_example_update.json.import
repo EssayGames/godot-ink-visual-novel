@@ -1,0 +1,15 @@
+[remap]
+
+importer="inkgd.ink.json"
+type="Resource"
+uid="uid://dofwkdpgj53uo"
+path="res://.godot/imported/Tutorial_example_update.json-44c37809047566d0bee61ff913b47849.res"
+
+[deps]
+
+source_file="res://INK/Tutorial_example_update.json"
+dest_files=["res://.godot/imported/Tutorial_example_update.json-44c37809047566d0bee61ff913b47849.res"]
+
+[params]
+
+compress=true

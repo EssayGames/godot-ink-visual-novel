@@ -4,85 +4,121 @@ VAR m_happy = false
 VAR f_happy = false
 VAR m_anger = false
 VAR f_nervous = false
+VAR f_name = "Jenny"
+VAR m_name = "Jimmy"
+VAR quest_1 = false
+VAR status_update = 0
 
-M: Hey F, how was your first day of class?
-*[Great!]->OK
+Hey {f_name}, how was your first day of class? #jimmy
+*[Great!]->OK 
 *[Not Great...]->Not_Great
 
 ===OK===
 ~f_happy = true
 ~f_neutral = false
-F: The teacher was really friendly.
+The teacher was really friendly. #jenny
+*[con't]->homework
+
+===homework===
+~quest_1 = true
+~f_happy = false
+~f_nervous = true
+{OK:But the teacher gave us a bunch of reading on the first day!}{Not_Great: And on top of that, I got extra reading for being late!} #jenny
 *[con't]->return_q
 
 ===Not_Great===
 ~f_nervous = true
 ~f_neutral = false
-F: I slept through my alarm and was over an hour late...
-*[con't]->return_q
+I slept through my alarm and was over an hour late... #jenny
+*[con't]->homework
 
 ===return_q===
 ~f_happy = false
 ~f_nervous = false
 ~f_neutral = true
-F: What about you M?
+What about you, {m_name}? #jenny
 *[Excellent!]->excellent
 *[Well..]->canceled
 
 ===excellent===
 ~m_happy = true
 ~m_neutral = false
-M: I got signed into an elective I really wanted!
-*[con't]->but_end
+I got signed into an elective I really wanted! #jimmy
+*[con't]->counselor
 
 ===canceled===
 ~m_anger = true
 ~m_neutral = false
-M: ... a class I needed to graduate got canceled suddenly
+... a class I needed to graduate got canceled suddenly. #jimmy
+*[con't]->counselor
+
+===counselor===
+~m_anger = false
+~m_happy = false
+~m_neutral = true
+{excellent:I just need to get my academic advisor to sign off!}{canceled:I gotta go ask my acadmic advisor if I'm going to graduate on time.}#jimmy
 *[con't]->but_end
 
 ===but_end===
-~m_anger = false
-~m_neutral = true
-~m_happy = false
-M: So an eventful day. 
-*[M: I hear you...]->hear_you
+So it's going to be an eventful day. #jimmy
+*[Can I help?]->help_jimmy
+*[Sounds like it!] ->hear_you
+
+===help_jimmy===
+~m_happy = true
+~m_neutral = false
+~status_update += 1
+Is there anything I can do to help? #jenny
+*[con't] ->hear_you
 
 ===hear_you===
-M: I hope this semester is...
-*[...better than last.]->better
-*[...is just as fun as the Fall!]->fun_fall
+~m_happy = false
+~m_neutral = true
+{help_jimmy: No, I think I got it. }I just hope this semester is... #jimmy
+*[... better than last.]->better
+*[... as fun as the Fall!]->fun_fall
 
 ===better===
-M: I fell behind early in homework and I can't let that happen again.
-*[F: Why not?]->why_not
-*[F: You won't]->you_wont
+~m_anger = true
+~m_neutral = false
+I fell behind early in homework and I can't let that happen again. #jimmy
+*[Why not?]->why_not
+*[You won't!]->you_wont
 
 ===why_not===
-M: Because my scholarship depends on keeping my grades up.
-*[F: You'll be fine]->gotta_go
+~m_anger = false
+~m_neutral = true
+Because my scholarship depends on keeping my grades up. #jimmy
+*[You'll be fine.]->gotta_go
 
 ===you_wont===
-M: Thanks F. That made my day.
-*[F: Anytime!]->gotta_go
+~m_anger = false
+~m_happy = true
+~status_update += 1
+Thanks, {f_name}. That made my day. #jimmy
+*[Anytime!]->gotta_go
 
 ===fun_fall===
-F: Well, as fun as it was, don't let it distract you!
-*[M: Distract me?!]->distract
-*[M: I won't]->I_wont
-
-===distract===
-M: It's not distracting to have fun, it's part of being in school!
-*[F: Ok... whatever you say...]->gotta_go
+~f_happy = true
+~f_neutral = false
+Well, don't let "having fun" distract you! #jenny
+*[con't]->I_wont
 
 ===I_wont===
-M: I'm going to keep my head down and really focus this semester.
-*[F: You've got this, M!]->gotta_go
+~f_neutral = true
+~f_happy = false
+~m_neutral = true
+Don't worry, I won't. I'm going to keep my head down and really focus this semester. #jimmy
+*[You've got this!]->gotta_go
 
 ===gotta_go===
 ~f_happy = true
 ~f_neutral = false
-F: For now, though, I gotta get to my next class!`M: Cool, see you around!->END
+~m_anger = false
+~m_neutral = true
+~m_happy = false
+For now, though, I gotta get to my next class!#jenny
+*[See ya!]->END
 
 
 

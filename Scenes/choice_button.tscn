@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dwn5trsaeogy5"]
+
+[node name="choice_button" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_hover_color = Color(0.184213, 4.81308e-05, 0.665292, 1)
+flat = true
